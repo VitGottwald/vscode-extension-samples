@@ -12,6 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			// a simple completion item which inserts `Hello World!`
 			const simpleCompletion = new vscode.CompletionItem('Hello World!');
+			simpleCompletion.range = new vscode.Range(new vscode.Position(position.line, 0), position)
 
 			// a completion item that inserts its text as snippet,
 			// the `insertText`-property is a `SnippetString` which will be
