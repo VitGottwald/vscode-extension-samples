@@ -12,13 +12,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 			// a simple completion item which inserts `Hello World!`
 			const simpleCompletion = new vscode.CompletionItem('Hello World!');
+			simpleCompletion.range = new vscode.Range(new vscode.Position(position.line, 0), position)
 
 			// a completion item that inserts its text as snippet,
 			// the `insertText`-property is a `SnippetString` which will be
 			// honored by the editor.
 			const snippetCompletion = new vscode.CompletionItem('Good part of the day');
 			snippetCompletion.insertText = new vscode.SnippetString('Good ${1|morning,afternoon,evening|}. It is ${1}, right?');
-			const docs : any = new vscode.MarkdownString("Inserts a snippet that lets you select [link](x.ts).");
+			const docs: any = new vscode.MarkdownString("Inserts a snippet that lets you select [link](x.ts).");
 			snippetCompletion.documentation = docs;
 			docs.baseUri = vscode.Uri.parse('http://example.com/a/b/c/');
 
@@ -43,7 +44,22 @@ export function activate(context: vscode.ExtensionContext) {
 				simpleCompletion,
 				snippetCompletion,
 				commitCharacterCompletion,
-				commandCompletion
+				commandCompletion,
+				{
+
+					label:
+					{
+						label: "label", detail: "labelDetail.detail", description: "labelDetail.description"
+					},
+					detail: "detail detail detail detail detail detail detail detail detail detail\n karel",
+					kind: 15,
+					// tags: [1],
+					// deprecated: true,
+					documentation: "documentation",
+					// description: "description",
+					insertText: "insertText"
+				}
+
 			];
 		}
 	});
