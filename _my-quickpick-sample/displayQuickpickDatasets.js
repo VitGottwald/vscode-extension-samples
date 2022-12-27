@@ -18,33 +18,42 @@ const displayQuickpickDatasets = (output) => {
     const quickpick = vscode.window.createQuickPick();
     quickpick.items = items;
     quickpick.placeholder = "A placeholder here";
-    quickpick.ignoreFocusOut = false;
-    // quickpick.canSelectMany = true;
-    quickpick.matchOnDescription = true;
-    quickpick.matchOnDetail = true;
+    quickpick.ignoreFocusOut = true;
+
+    const getActive = () => quickpick.activeItems.map(item => item.label).join(', ');
+    const getSelected = () => quickpick.selectedItems.map(item => item.label).join(', ')
+    const getValue = () => quickpick.value;
 
     quickpick.onDidAccept(() => {
+        output.appendLine('onDidAccept:')
         output.appendLine(
-            `Accepted ${quickpick.activeItems.map(item => item.label).join(', ')}`
+            `  activeItems: ${getActive()}`
         );
         output.appendLine(
-            `Selected ${quickpick.selectedItems.map(item => item.label).join(', ')}`
+            `  selectedItems ${getSelected()}`
         );
     });
     quickpick.onDidChangeActive(() => {
+        output.appendLine('onDidAccept:')
         output.appendLine(
-            `Change Active: ${quickpick.activeItems.map(item => item.label).join(', ')}`
+            `  activeItems: ${getActive()}`
         );
     });
     quickpick.onDidChangeSelection(() => {
+        output.appendLine('onDidChangeSelection')
         output.appendLine(
-            `Change Selection: ${quickpick.selectedItems.map(item => item.label).join(', ')}`
+            `  selectedItems: ${getSelected()}`
         );
     });
     quickpick.onDidChangeValue(() => {
+        output.appendLine('onDidChangeValue')
         output.appendLine(
-            `Current Value ${quickpick.value}`
+            `  value: ${getValue()}`
         );
+        const items = items.filter(item => !item.sythetic)
+        items.push({ label: `+Add dataset: ${value}`, synthetic: true })
+        // quickpick.items = items;
+        quickpick.items = [{ label: 'karel' }]
     });
 
     quickpick.show();
